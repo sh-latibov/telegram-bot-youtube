@@ -23,30 +23,25 @@ func (b *Bot) handleCommand(message *tgbotapi.Message) error {
 }
 
 func (b *Bot) handleMessage(message *tgbotapi.Message) error {
-	msg := tgbotapi.NewMessage(message.Chat.ID, "Link saved")
 
 	_, err := url.ParseRequestURI(message.Text)
 	if err != nil {
-		msg.Text = "Link not validated!"
-		_, err := b.bot.Send(msg)
-		return err
+		return errInvalidURL
 	}
 
 	accessToken, err := b.getAccessToken(message.Chat.ID)
 	if err != nil {
-		msg.Text = "You not authorized! Try command /start"
-		return err
+		return errUnauthorized
 	}
 
 	if err := b.pocketClient.Add(context.Background(), pocket.AddInput{
 		AccessToken: accessToken,
 		URL:         message.Text,
 	}); err != nil {
-		msg.Text = "Oops! Try send again later."
-		_, err = b.bot.Send(msg)
-		return err
+		return errUnableToSave
 	}
 
+	msg := tgbotapi.NewMessage(message.Chat.ID, "Link saved")
 	_, err = b.bot.Send(msg)
 	return err
 }

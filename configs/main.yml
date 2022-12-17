@@ -1,0 +1,15 @@
+db_file: "bot.db"
+
+bot_url: "https://t.me/tishtidish_bot"
+
+messages:
+  responses:
+    start: "Hello! Do you have account? No? Click to link:\n%s"
+    already_authorized: "You authorized, give me your link and I am save it is"
+    saved_successfully: "Link saved"
+    unknown_command: "Command not found :("
+  errors:
+    default: "Unknown error"
+    invalid_url: "Link not validated!"
+    unauthorized: "You not authorized! Try command /start"
+    unable_to_save: "Oops! Try send again later."

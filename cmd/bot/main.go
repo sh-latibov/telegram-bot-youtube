@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/boltdb/bolt"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"github.com/sh-latibov/telegram-bot-youtube/pkg/config"
 	"github.com/sh-latibov/telegram-bot-youtube/pkg/repository"
 	"github.com/sh-latibov/telegram-bot-youtube/pkg/repository/boltdb"
 	"github.com/sh-latibov/telegram-bot-youtube/pkg/server"
@@ -12,6 +13,13 @@ import (
 )
 
 func main() {
+	cfg, err := config.Init()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println(cfg)
+
 	bot, err := tgbotapi.NewBotAPI("5973915755:AAHbuNdT-mjRnrWTuyMIT2OgEcDUs8rPDIU")
 	if err != nil {
 		log.Fatal(err)
